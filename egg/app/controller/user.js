@@ -4,20 +4,29 @@ const Controller = require('egg').Controller;
 
 class UserController extends Controller {
     async userLogin() {
-        let user = this.ctx.request.body;
-        const token = this.app.jwt.sign({
+        const {
+            ctx,
+            service,
+            app
+        } = this;
+        let user = ctx.request.body;
+        const token = app.jwt.sign({
             username: user.username,
             password: user.password,
-        }, this.app.config.jwt.secret, {
+        }, app.config.jwt.secret, {
             expiresIn: '1800s',
         })
-        let result = await this.service.user.check(user);
-        this.ctx.body = result
-        this.ctx.body.token = token;
+        let result = await service.user.check(user);
+        ctx.body = result
+        ctx.body.token = token;
     }
     async checkToken() {
+        const {
+            ctx,
+            service
+        } = this;
         console.log(this.ctx.state.user);
-        this.ctx.body = {
+        ctx.body = {
             code: 0,
             msg: 'success'
         }

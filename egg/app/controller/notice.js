@@ -4,15 +4,23 @@ const Controller = require('egg').Controller;
 
 class NoticeController extends Controller {
     async postNotice() {
-        let query = this.ctx.request.body;
-        let result = await this.service.notice.postNotice(query)
+        const {
+            ctx,
+            service
+        } = this;
+        let query = ctx.request.body;
+        let result = await service.notice.postNotice(query)
         if (result.affectedRows === 1) {
-            this.ctx.body = result;
+            ctx.body = result;
         }
     }
     async getNotice() {
+        const {
+            ctx,
+            service
+        } = this;
         let result = await this.service.notice.getNotice();
-        this.ctx.body = result;
+        ctx.body = result;
     }
 }
 

@@ -4,7 +4,7 @@ const Service = require('egg').Service;
 
 class UserService extends Service {
     async check(user) {
-        let {
+        const {
             app
         } = this;
         let result = await app.mysql.get('user',

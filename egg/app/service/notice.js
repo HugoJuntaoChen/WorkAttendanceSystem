@@ -4,7 +4,7 @@ const Service = require('egg').Service;
 
 class NoticeService extends Service {
     async postNotice(notice) {
-        let {
+        const {
             app
         } = this;
         let result = await app.mysql.insert('notice',

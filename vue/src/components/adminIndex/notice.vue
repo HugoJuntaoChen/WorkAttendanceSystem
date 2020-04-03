@@ -3,11 +3,7 @@
     <h1 style="padding-left:40px">
       通告
     </h1>
-    <el-table
-      :data="preNoticeData"
-      border
-      style="width: 99%;margin-top:20px;margin-left:10px"
-    >
+    <el-table :data="preNoticeData" border style="width: 99%;margin-top:20px;margin-left:10px">
       <el-table-column label="title" width="100px">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.title }}</span>
@@ -26,12 +22,7 @@
     </el-table>
     <div style="width:98%;margin: 20px auto;border:1px solid #EBEEF5">
       <h2>发表通告</h2>
-      <el-form
-        label-position="right"
-        label-width="80px"
-        :model="nowNoticeData"
-        style="width:80%;margin:0 auto"
-      >
+      <el-form label-position="right" label-width="80px" :model="nowNoticeData" style="width:80%;margin:0 auto">
         <el-row>
           <el-col>
             <el-form-item label="title">
@@ -42,10 +33,7 @@
         <el-row>
           <el-col>
             <el-form-item label="内容">
-              <el-input
-                v-model="nowNoticeData.content"
-                class="myInput"
-              ></el-input>
+              <el-input v-model="nowNoticeData.content" class="myInput"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -58,7 +46,7 @@
       </el-row>
     </div>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <span style="font-size:16px"><b>请问确定是否发布</b></span>
+      <span style="font-size:16px"><b>请问是否发布</b></span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="postNotice">确 定</el-button>
@@ -73,7 +61,7 @@ import { pre } from "@/assets/js/mock/noticeMock";
 import { messages } from "@/assets/js/util";
 export default {
   name: "notice",
-  data() {
+  data () {
     return {
       preNoticeData: [],
       nowNoticeData: {
@@ -83,7 +71,7 @@ export default {
       dialogVisible: false
     };
   },
-  created() {
+  created () {
     this.$axios
       .get("http://127.0.0.1:7001/noticeget")
       .then(res => {
@@ -94,14 +82,14 @@ export default {
       });
   },
   methods: {
-    confirm() {
+    confirm () {
       if (this.nowNoticeData.title && this.nowNoticeData.content) {
         this.dialogVisible = true;
       } else {
         messages(this, "warning", "请输入内容");
       }
     },
-    postNotice() {
+    postNotice () {
       let obj = {
         title: this.nowNoticeData.title,
         content: this.nowNoticeData.content
@@ -122,7 +110,7 @@ export default {
         this.nowNoticeData.content = "";
       });
     },
-    reset() {
+    reset () {
       this.$nextTick(() => {
         this.nowNoticeData.title = "";
         this.nowNoticeData.content = "";

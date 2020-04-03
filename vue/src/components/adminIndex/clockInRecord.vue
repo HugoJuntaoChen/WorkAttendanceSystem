@@ -10,18 +10,13 @@
       </el-col>
     </el-row>
 
-    <el-table
-      :data="
+    <el-table :data="
         recordData.filter(
           data =>
             !search ||
             data.username.toLowerCase().includes(search.toLowerCase())
         )
-      "
-      border
-      style="width: 99%;margin-top:20px;margin-left:10px"
-      :default-sort="{ prop: 'date', order: 'descending' }"
-    >
+      " border style="width: 99%;margin-top:20px;margin-left:10px" :default-sort="{ prop: 'date', order: 'descending' }">
       <el-table-column label="用户名">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.username }}</span>
@@ -51,11 +46,20 @@
 import mockData from "@/assets/js/mock/recordMock";
 export default {
   name: "staffInfo",
-  data() {
+  data () {
     return {
       recordData: mockData,
       search: ""
     };
+  },
+  created () {
+    this.$axios.get(`http://127.0.0.1:7001/staff/getallclock`)
+      .then(res => {
+        this.recordData = res.data;
+
+      }).catch(err => {
+        console.log(err);
+      })
   },
   methods: {}
 };

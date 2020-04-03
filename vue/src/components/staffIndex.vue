@@ -7,25 +7,25 @@
       </el-menu-item>
       <el-menu-item index="2">
         <i class="el-icon-edit"></i>
-        <span slot="title">打卡</span>
+        <span slot="title">我的打卡</span>
       </el-menu-item>
       <el-menu-item index="3">
         <i class="el-icon-document"></i>
-        <span slot="title">我的打卡</span>
+        <span slot="title">请假</span>
       </el-menu-item>
       <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">打卡统计</span>
+        <i class="el-icon-document"></i>
+        <span slot="title">销假</span>
       </el-menu-item>
     </el-menu>
-    <staffInfo :is="currentTab" keep-alive></staffInfo>
+    <staffNotice :is="currentTab" keep-alive></staffNotice>
   </div>
 </template>
 
 <script>
-import clockInfo from "./staffIndex/clockInfo";
+import leave from "./staffIndex/leave";
+import stopLeave from "./staffIndex/stopLeave";
 import myClock from "./staffIndex/myClock";
-import staffClockIn from "./staffIndex/staffClockIn";
 import staffNotice from "./staffIndex/staffNotice";
 export default {
   name: "adminIndex",
@@ -39,16 +39,16 @@ export default {
       if (key === "1") {
         this.currentTab = "staffNotice";
       } else if (key === "2") {
-        this.currentTab = "staffClockIn";
-      } else if (key === "3") {
         this.currentTab = "myClock";
+      } else if (key === "3") {
+        this.currentTab = "leave";
       } else if (key === "4") {
-        this.currentTab = "clockInfo"
+        this.currentTab = "stopLeave";
       }
-    }
+    },
   },
-  components: { clockInfo, myClock, staffClockIn, staffNotice }
-};
+  components: { leave, myClock, staffNotice, stopLeave }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
