@@ -33,6 +33,9 @@ module.exports = appInfo => {
         origin: "*",
         allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH"
     };
+    config.jwt = {
+        secret: "165165"
+    };
     config.mysql = {
         client: {
             // host

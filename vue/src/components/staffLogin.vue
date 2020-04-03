@@ -1,6 +1,6 @@
 <template>
   <div style="width:500px;margin:60px auto 0;border:1px solid #d1ddec">
-    <h3 style="text-align:center">管理员登陆</h3>
+    <h3 style="text-align:center">员工登陆</h3>
     <el-form :model="rootForm" ref="rootForm" label-width="100px" style="height:300px">
       <el-form-item label="用户名" label-width="70px" prop="username" :rules="[{ required: true, message: '用户名不能为空' }]" style="padding:10px 70px 0 40px">
         <el-input v-model="rootForm.username" autocomplete="off"></el-input>
@@ -12,7 +12,7 @@
         <el-button type="primary" @click="submitForm('rootForm')">登陆</el-button>
         <el-button @click="resetForm('rootForm')">重置</el-button>
       </el-form-item>
-      <el-button type='text' style="margin-left:85%;margin-top:-20px" @click="$router.push({path:'/staffLogin'})">员工登陆</el-button>
+      <el-button type='text' style="margin-left:80%;margin-top:-20px" @click="$router.push({path:'/login'})">管理员登陆</el-button>
     </el-form>
   </div>
 </template>

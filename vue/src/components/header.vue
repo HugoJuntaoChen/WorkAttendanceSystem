@@ -1,19 +1,35 @@
 <template>
   <el-row>
-    <el-col :span="24"
-      ><div class="grid-content bg-purple-dark">企业考勤系统</div></el-col
-    >
+    <div class="grid-content bg-purple-dark">
+      <el-col :span="23">
+        企业考勤系统
+      </el-col>
+      <el-col :span="1">
+        <el-button type="text" style="color:black !important" @click="exit">退出</el-button>
+      </el-col>
+    </div>
   </el-row>
 </template>
 
 <script>
 export default {
   name: "Header",
-  data() {
+  data () {
     return {};
   },
-  mounted() {},
-  method: {}
+  mounted () { },
+  methods: {
+    exit () {
+      if (
+        sessionStorage.getItem("userToken") ||
+        sessionStorage.getItem("staffToken")
+      ) {
+        sessionStorage.removeItem("userToken");
+        sessionStorage.removeItem("staffToken");
+        this.$router.push({ path: "/login" });
+      }
+    }
+  }
 };
 </script>
 
