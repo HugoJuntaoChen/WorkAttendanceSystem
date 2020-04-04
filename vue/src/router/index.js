@@ -4,6 +4,7 @@ import adminIndex from '@/components/adminIndex'
 import Login from '@/components/login'
 import staffLogin from '@/components/staffLogin'
 import staffIndex from '@/components/staffIndex'
+import test from '@/components/test'
 Vue.use(Router)
 const router = new Router({
   routes: [{
@@ -63,7 +64,12 @@ const router = new Router({
     {
       path: '/',
       redirect: '/adminIndex'
-    }
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test
+    },
   ]
 })
 

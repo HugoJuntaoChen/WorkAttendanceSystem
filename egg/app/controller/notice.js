@@ -19,7 +19,7 @@ class NoticeController extends Controller {
             ctx,
             service
         } = this;
-        let result = await this.service.notice.getNotice();
+        let result = await service.notice.getNotice();
         ctx.body = result;
     }
 }

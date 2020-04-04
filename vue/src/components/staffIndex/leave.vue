@@ -88,6 +88,7 @@ export default {
     postLeaveIssues () {
       let username = 'cjt';
       this.leaveData.username = username;
+      this.leaveData.state = '未处理'
       this.$axios.post('http://127.0.0.1:7001/staff/addleaveissues', this.leaveData).then(res => {
         console.log(res);
         messages(this, 'success', '提交成功');

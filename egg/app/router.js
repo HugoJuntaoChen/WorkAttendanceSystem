@@ -27,4 +27,6 @@ module.exports = app => {
 
     //请假
     router.post('/staff/addleaveissues', controller.leave.addLeave)
+    router.get('/admin/getleave', controller.leave.getLeave)
+    router.post('/admin/changeleavestate', controller.leave.changeLeaveState)
 };
