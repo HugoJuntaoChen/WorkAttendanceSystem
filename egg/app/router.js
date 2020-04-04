@@ -29,4 +29,9 @@ module.exports = app => {
     router.post('/staff/addleaveissues', controller.leave.addLeave)
     router.get('/admin/getleave', controller.leave.getLeave)
     router.post('/admin/changeleavestate', controller.leave.changeLeaveState)
+
+
+    //测试
+    router.post('/api/upload/img', controller.test.uploadImg);
+    router.get('/api/getphoto', controller.test.getPhoto)
 };
