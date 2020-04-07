@@ -14,7 +14,9 @@ class testController extends Controller {
         let parts = ctx.multipart({
             autoFields: true
         });
-        let stream; // 图片访问地址集合
+        console.log(parts);
+
+        let stream;
         let result;
         while ((stream = await parts()) != null) {
             if (!stream.filename) {
@@ -28,7 +30,8 @@ class testController extends Controller {
                 .substr(2) +
                 path.extname(stream.filename).toLocaleLowerCase();
             // 上传图片的目录
-            let target = "app/public/admin/upload/" + filename;
+            let target = "app/public/" + filename;
+            // let target = "../../../vue/src/assets/" + filename
             console.log(123, target, typeof target);
             let obj = {
                 username: 'cjt',

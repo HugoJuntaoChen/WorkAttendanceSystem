@@ -2,22 +2,23 @@
   <div>
     <input type="file" @change="uploadFile($event)" multiple="multiple" />
     <el-button @click="get">获取</el-button>
-    <!-- <img src="../../../egg/app/public/admin/upload/1585996577896ooixgwu1iv.jpg" style="wdith:100px;height:100px"> -->
+    <img :src="url" style="wdith:100px;height:100px">
+    <img :src="imgUrl" style="wdith:100px;height:100px">
     <!-- <img src="../assets/1.jpg" style="wdith:100px;height:100px"> -->
     <!-- <img :src="img.address" alt=""> -->
   </div>
 </template>
 
 <script>
+// import func from '../../vue-temp/vue-editor-bridge';
 export default {
   name: 'Test',
   data () {
     return {
       videoEle: null,
-      photoAddress: '',
-      img: {
-        address: ''
-      }
+      imgUrl: '',
+      url: '../../../egg/app/public/admin/upload/1585996577896ooixgwu1iv.jpg',
+      photoAddress: ''
     }
   },
   methods: {
@@ -38,14 +39,9 @@ export default {
     get () {
       this.$axios.get('http://127.0.0.1:7001/api/getphoto?username=cjt')
         .then(res => {
-          console.log(res.data[0].address);
           this.photoAddress = '../../../egg/' + res.data[0].address;
-          this.$nextTick(() => {
-            // this.img.address = require(this.photoAddress)
-            console.log(this.photoAddress);
-          })
-
-
+          console.log(this.photoAddress);
+          this.imgUrl = require('../assets/1.jpg' + '');
         }).catch(err => {
           console.log(err);
 
