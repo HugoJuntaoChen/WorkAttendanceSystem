@@ -33,7 +33,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios
-            .post("http://127.0.0.1:7001/user/login", {
+            .post("http://127.0.0.1:7001/staff/login", {
               username: this.rootForm.username,
               password: this.rootForm.password
             })
@@ -42,9 +42,8 @@ export default {
               if (res.status !== 200) {
                 messages(this, "warning", "用户名或密码错误");
               } else {
-                sessionStorage.setItem("userToken", res.data.token);
-
-                this.$router.push({ path: "/adminIndex" });
+                sessionStorage.setItem("staffToken", res.data.token);
+                this.$router.push({ path: "/staffIndex" });
                 messages(this, "success", "登陆成功");
               }
             })

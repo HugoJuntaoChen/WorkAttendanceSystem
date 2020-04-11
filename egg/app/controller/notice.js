@@ -9,6 +9,7 @@ class NoticeController extends Controller {
             service
         } = this;
         let query = ctx.request.body;
+
         let result = await service.notice.postNotice(query)
         if (result.affectedRows === 1) {
             ctx.body = result;

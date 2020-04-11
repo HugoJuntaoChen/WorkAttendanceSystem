@@ -24,22 +24,22 @@
       <h2>发表通告</h2>
       <el-form label-position="right" label-width="80px" :model="nowNoticeData" style="width:80%;margin:0 auto">
         <el-row>
-          <el-col>
+          <el-col :span="16" :push="3">
             <el-form-item label="title">
               <el-input v-model="nowNoticeData.title"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col>
+          <el-col :span="16" :push="3">
             <el-form-item label="内容">
-              <el-input v-model="nowNoticeData.content" class="myInput"></el-input>
+              <el-input v-model="nowNoticeData.content" type='textarea' maxlength="150" show-word-limit></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <el-row>
-        <el-col :push="11">
+        <el-col :push="11" style="margin-bottom:20px">
           <el-button type="info" @click="reset">重置</el-button>
           <el-button type="primary" @click="confirm">确定</el-button>
         </el-col>

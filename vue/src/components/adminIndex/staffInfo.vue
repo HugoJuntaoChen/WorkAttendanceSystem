@@ -32,7 +32,7 @@
           <span style="margin-left: 10px">{{ scope.row.state }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="date" label="创建日期">
+      <el-table-column prop="createDate" label="创建日期">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -84,6 +84,14 @@ export default {
 
       }
     };
+  },
+  created () {
+    this.$axios.get('http://127.0.0.1:7001/staff/getstaffinfo').then(res => {
+      this.tableData = res.data;
+    }).catch(err => {
+      console.log(err);
+
+    })
   },
   methods: {
     handleEdit (index, row) {

@@ -1,11 +1,8 @@
 <template>
-  <div>
+  <div class="photo">
     <input type="file" @change="uploadFile($event)" multiple="multiple" />
     <el-button @click="get">获取</el-button>
-    <img :src="url" style="wdith:100px;height:100px">
-    <img :src="imgUrl" style="wdith:100px;height:100px">
-    <!-- <img src="../assets/1.jpg" style="wdith:100px;height:100px"> -->
-    <!-- <img :src="img.address" alt=""> -->
+    <img v-if="target" :src="'http://127.0.0.1:7001/'+target" style="width:200px;height:200px">
   </div>
 </template>
 
@@ -17,34 +14,43 @@ export default {
     return {
       videoEle: null,
       imgUrl: '',
-      url: '../../../egg/app/public/admin/upload/1585996577896ooixgwu1iv.jpg',
-      photoAddress: ''
+      target: '',
+      username: 'chenjuntao'
     }
   },
   methods: {
     uploadFile: function (event) {
       this.file = event.target.files[0]; //获取input的图片file值
-
       let param = new FormData(); // 创建form对象
       param.append('imgFile', this.file);//对应后台接收图片名
-
+      let obj = {}
+      let that = this;
       this.$axios.post('http://127.0.0.1:7001/api/upload/img', param)
         .then(function (res) {
-          console.log(res);
+          obj.address = res.data;
+          obj.username = that.username
+          that.$axios.post('http://127.0.0.1:7001/api/saveimg', obj).then(res => {
+            console.log(res);
+
+          }).catch(err => {
+            console.log(err);
+          })
         })
         .catch(function (error) {
           console.log(error);
         });
     },
     get () {
-      this.$axios.get('http://127.0.0.1:7001/api/getphoto?username=cjt')
+      this.$axios.get(`http://127.0.0.1:7001/api/getphoto?username=${this.username}`)
         .then(res => {
-          this.photoAddress = '../../../egg/' + res.data[0].address;
-          console.log(this.photoAddress);
-          this.imgUrl = require('../assets/1.jpg' + '');
+          //   this.photoAddress += res.data[0].address;
+          let path = res.data[0].address
+          let arr = path.split('/');
+          arr.splice(0, 1);
+          path = arr.join('/');
+          this.target = path;
         }).catch(err => {
           console.log(err);
-
         })
     }
   },

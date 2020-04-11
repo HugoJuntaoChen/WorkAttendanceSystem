@@ -15,7 +15,7 @@
       </el-menu-item>
       <el-menu-item index="4">
         <i class="el-icon-document"></i>
-        <span slot="title">销假</span>
+        <span slot="title">修改个人信息</span>
       </el-menu-item>
     </el-menu>
     <staffNotice :is="currentTab" keep-alive></staffNotice>
@@ -24,7 +24,7 @@
 
 <script>
 import leave from "./staffIndex/leave";
-import stopLeave from "./staffIndex/stopLeave";
+import modifyInfo from "./staffIndex/modifyInfo";
 import myClock from "./staffIndex/myClock";
 import staffNotice from "./staffIndex/staffNotice";
 export default {
@@ -43,11 +43,11 @@ export default {
       } else if (key === "3") {
         this.currentTab = "leave";
       } else if (key === "4") {
-        this.currentTab = "stopLeave";
+        this.currentTab = "modifyInfo";
       }
     },
   },
-  components: { leave, myClock, staffNotice, stopLeave }
+  components: { leave, myClock, staffNotice, modifyInfo }
 }
 </script>
 

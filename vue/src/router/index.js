@@ -43,15 +43,15 @@ const router = new Router({
       path: '/staffLogin',
       name: 'staffLogin',
       component: staffLogin,
-      //   beforeEnter: (to, from, next) => {
-      //     if (sessionStorage.getItem('userToken')) {
-      //       next('/adminIndex')
-      //     } else if (sessionStorage.getItem('staffToken')) {
-      //       next('/staffIndex')
-      //     } else {
-      //       next()
-      //     }
-      //   },
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('userToken')) {
+          next('/adminIndex')
+        } else if (sessionStorage.getItem('staffToken')) {
+          next('/staffIndex')
+        } else {
+          next()
+        }
+      },
       meta: {
         requireAuth: true
       }
@@ -59,7 +59,14 @@ const router = new Router({
     {
       path: '/staffIndex',
       name: 'staffIndex',
-      component: staffIndex
+      component: staffIndex,
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('staffToken')) {
+          next()
+        } else {
+          next('/login')
+        }
+      },
     },
     {
       path: '/',

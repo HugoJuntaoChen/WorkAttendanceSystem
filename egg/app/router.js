@@ -10,6 +10,7 @@ module.exports = app => {
     } = app;
     //用户员登陆
     router.post('/user/login', controller.user.userLogin);
+    router.post('/staff/login', controller.staff.staffLogin);
     //员工当天打卡情况
     router.get('/staff/getclock', controller.staffClock.getClock);
     //管理员得到所有人的打卡信息
@@ -30,8 +31,13 @@ module.exports = app => {
     router.get('/admin/getleave', controller.leave.getLeave)
     router.post('/admin/changeleavestate', controller.leave.changeLeaveState)
 
+    //员工编辑页 
+    router.get('/staff/getstaffinfo', controller.staff.getStaffInfo)
+
+
 
     //测试
     router.post('/api/upload/img', controller.test.uploadImg);
-    router.get('/api/getphoto', controller.test.getPhoto)
+    router.get('/api/getphoto', controller.test.getPhoto);
+    router.post('/api/saveimg', controller.test.save)
 };

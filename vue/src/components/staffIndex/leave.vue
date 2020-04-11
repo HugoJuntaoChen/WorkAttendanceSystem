@@ -4,8 +4,7 @@
       请假
     </h1>
     <div style="width:98%;margin: 20px auto;border:1px solid #EBEEF5">
-      <h2></h2>
-      <el-form label-position="right" label-width="80px" :model="leaveData" style="width:80%;margin:0 auto">
+      <el-form label-position="right" label-width="80px" :model="leaveData" style="width:80%;margin:50px auto">
         <el-row>
           <el-col :span="12" :push="5">
             <el-form-item label="请假原因">
