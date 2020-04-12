@@ -15,9 +15,11 @@
 export default {
   name: "Header",
   data () {
-    return {};
+    return {
+    };
   },
-  mounted () { },
+  created () {
+  },
   methods: {
     exit () {
       if (
@@ -26,6 +28,7 @@ export default {
       ) {
         sessionStorage.removeItem("userToken");
         sessionStorage.removeItem("staffToken");
+        sessionStorage.removeItem('username');
         this.$router.push({ path: "/login" });
       }
     }

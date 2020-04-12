@@ -31,10 +31,12 @@ module.exports = app => {
     router.get('/admin/getleave', controller.leave.getLeave)
     router.post('/admin/changeleavestate', controller.leave.changeLeaveState)
 
-    //员工编辑页 
+    //管理员-员工编辑页 
     router.get('/staff/getstaffinfo', controller.staff.getStaffInfo)
 
-
+    //员工-修改个人信息
+    router.get('/staff/getsomestaffinfo', controller.staff.getSomeStaffInfo)
+    router.post('/staff/changestaffinfo', controller.staff.changeStaffInfo)
 
     //测试
     router.post('/api/upload/img', controller.test.uploadImg);

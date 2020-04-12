@@ -43,6 +43,7 @@ export default {
                 messages(this, "warning", "用户名或密码错误");
               } else {
                 sessionStorage.setItem("staffToken", res.data.token);
+                sessionStorage.setItem('username', this.rootForm.username)
                 this.$router.push({ path: "/staffIndex" });
                 messages(this, "success", "登陆成功");
               }
