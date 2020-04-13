@@ -7,18 +7,27 @@ class PhotoService extends Service {
         const {
             app
         } = this;
-        let result = await app.mysql.insert('photo',
-            obj
-        );
+        let username = obj.username;
+        let photo = obj.photo;
+        let result = await app.mysql.update('staff', {
+            photo: photo
+        }, {
+            where: {
+                username: username
+            }
+        });
         return result;
     }
     async getPhoto(query) {
         const {
             app
         } = this;
-        let result = await app.mysql.select('photo', {
-            where: query,
-            columns: ['address']
+        let username = Object.keys(query)[0];
+        let result = await app.mysql.select('staff', {
+            where: {
+                username: username
+            },
+            columns: ['photo']
         });
         return result;
     }

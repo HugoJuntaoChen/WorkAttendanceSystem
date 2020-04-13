@@ -38,6 +38,15 @@ module.exports = app => {
     router.get('/staff/getsomestaffinfo', controller.staff.getSomeStaffInfo)
     router.post('/staff/changestaffinfo', controller.staff.changeStaffInfo)
 
+
+    //图片新增到服务器
+    router.post('/photo/uploadimg', controller.photo.uploadImg);
+    //图片保存到数据库
+    router.post('/photo/save', controller.photo.save);
+    //图片获取
+    router.get('/photo/get', controller.photo.getPhoto);
+
+
     //测试
     router.post('/api/upload/img', controller.test.uploadImg);
     router.get('/api/getphoto', controller.test.getPhoto);

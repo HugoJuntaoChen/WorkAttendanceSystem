@@ -7,6 +7,7 @@
       <el-form :model="form" label-position="left" style="width:80%;margin:50px auto" status-icon :rules="rules" ref="form">
         <el-form-item label="照片" label-width="80px">
           <input type="file" @change="uploadFile($event)" multiple="multiple" />
+          <img v-if="imgSrc" :src="imgSrc" style="width:100px;height:100px">
         </el-form-item>
         <el-form-item label="重设密码" label-width="80px" prop="password">
           <el-input type='password' v-model="form.password" show-password></el-input>
@@ -100,6 +101,7 @@ export default {
           { validator: validateEmail, trigger: 'blur' }
         ]
       },
+      imgSrc: '',
       username: '',
       dialogVisible: false,
       dialogVisible1: false
@@ -121,12 +123,19 @@ export default {
       param.append('imgFile', this.file);//对应后台接收图片名
       let obj = {}
       let that = this;
-      this.$axios.post('http://127.0.0.1:7001/api/upload/img', param)
+      this.$axios.post('http://127.0.0.1:7001/photo/uploadimg', param)
         .then(function (res) {
-          obj.address = res.data;
+          obj.photo = res.data;
           obj.username = that.username
-          that.$axios.post('http://127.0.0.1:7001/api/saveimg', obj).then(res => {
-            console.log(res);
+          that.$axios.post('http://127.0.0.1:7001/photo/save', obj).then(res => {
+            that.$axios.get(`http://127.0.0.1:7001/photo/get?${that.username}`).then(res => {
+              console.log(res);
+              let path = res.data[0].photo;
+              let arr = path.split('/');
+              arr.splice(0, 1);
+              path = arr.join('/');
+              that.imgSrc = 'http://127.0.0.1:7001/' + path;
+            })
           }).catch(err => {
             console.log(err);
           })

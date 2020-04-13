@@ -12,9 +12,10 @@
           <span style="margin-left: 10px">{{ scope.row.username }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="照片" width="250">
+      <el-table-column label="照片" width="200">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.photo }}</span>
+          <!-- <span style="margin-left: 10px">{{ scope.row.photo }}</span> -->
+          <img :src="scope.row.photo" style="width:100px;height:100px">
         </template>
       </el-table-column>
       <el-table-column label="手机" width="180">
@@ -87,6 +88,14 @@ export default {
   },
   created () {
     this.$axios.get('http://127.0.0.1:7001/staff/getstaffinfo').then(res => {
+      console.log(res);
+      res.data.forEach(item => {
+        let path = item['photo'];
+        let arr = path.split('/');
+        arr.splice(0, 1);
+        path = arr.join('/');
+        item['photo'] = 'http://127.0.0.1:7001/' + path;
+      })
       this.tableData = res.data;
     }).catch(err => {
       console.log(err);
