@@ -33,6 +33,10 @@ module.exports = app => {
 
     //管理员-员工编辑页 
     router.get('/staff/getstaffinfo', controller.staff.getStaffInfo)
+    //新增员工
+    router.post('/staff/addstaff', controller.staff.addStaff)
+    router.post('/staff/deletestaff', controller.staff.deleteStaff)
+
 
     //员工-修改个人信息
     router.get('/staff/getsomestaffinfo', controller.staff.getSomeStaffInfo)

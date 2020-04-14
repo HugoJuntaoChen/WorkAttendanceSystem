@@ -27,12 +27,12 @@
           <span style="margin-left: 10px">{{ scope.row.type }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上班时间">
+      <el-table-column label="开始日期">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.startDate }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="下班时间">
+      <el-table-column label="结束日期">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.endDate }}</span>
         </template>

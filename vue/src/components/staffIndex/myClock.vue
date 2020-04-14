@@ -18,32 +18,6 @@
         <el-button type="primary" @click="clock">确 定</el-button>
       </span>
     </el-dialog>
-    <h1 style="padding-left:40px;margin-top:60px">
-      我的打卡情况
-    </h1>
-    <el-table :data="recordData" border style="width: 99%;margin-top:20px;margin-left:10px" :default-sort="{ prop: 'date', order: 'descending' }">
-      <el-table-column label="用户名">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.username }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="date" label="日期" sortable> </el-table-column>
-      <el-table-column label="上班时间">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.startTime }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="下班时间">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.endTime }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="状态">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.state }}</span>
-        </template>
-      </el-table-column>
-    </el-table>
   </div>
 </template>
 
@@ -55,29 +29,24 @@ export default {
   name: "notice",
   data () {
     return {
+      username: '',
       startTime: '',
       endTime: '',
       dialogVisible: false,
       state: '',
       date: '',
       situation: '',
-      recordData: []
+      recordData: [],
     };
   },
   created () {
+    this.username = sessionStorage.getItem('username');
     this.date = dayjs().format("YYYY-MM-DD")
-    this.$axios.get(`http://127.0.0.1:7001/staff/getclock?username=cjt&date=${this.date}`)
+    this.$axios.get(`http://127.0.0.1:7001/staff/getclock?username=${this.username}&date=${this.date}`)
       .then(res => {
         this.startTime = res.data.startTime;
         this.endTime = res.data.endTime;
         this.situation = res.data.state
-      }).catch(err => {
-        console.log(err);
-      })
-    this.$axios.get(`http://127.0.0.1:7001/staff/getsomeclock?username=cjt`)
-      .then(res => {
-        this.recordData = res.data;
-
       }).catch(err => {
         console.log(err);
       })
@@ -116,7 +85,7 @@ export default {
       }
       this.situation = situation;
       let obj = {
-        username: 'cjt',
+        username: this.username,
         startTime: startTime,
         date: this.date,
         state: situation
@@ -144,7 +113,7 @@ export default {
         },
         options: {
           where: {
-            username: 'cjt',
+            username: this.username,
             date: this.date,
           }
 

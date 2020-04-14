@@ -7,13 +7,17 @@
       </el-menu-item>
       <el-menu-item index="2">
         <i class="el-icon-edit"></i>
-        <span slot="title">我的打卡</span>
+        <span slot="title">打卡</span>
       </el-menu-item>
       <el-menu-item index="3">
+        <i class="el-icon-edit"></i>
+        <span slot="title">我的打卡情况</span>
+      </el-menu-item>
+      <el-menu-item index="4">
         <i class="el-icon-document"></i>
         <span slot="title">请假</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="5">
         <i class="el-icon-document"></i>
         <span slot="title">修改个人信息</span>
       </el-menu-item>
@@ -27,6 +31,7 @@ import leave from "./staffIndex/leave";
 import modifyInfo from "./staffIndex/modifyInfo";
 import myClock from "./staffIndex/myClock";
 import staffNotice from "./staffIndex/staffNotice";
+import clockInfo from "./staffIndex/clockInfo";
 export default {
   name: "adminIndex",
   data () {
@@ -40,14 +45,16 @@ export default {
         this.currentTab = "staffNotice";
       } else if (key === "2") {
         this.currentTab = "myClock";
-      } else if (key === "3") {
-        this.currentTab = "leave";
       } else if (key === "4") {
+        this.currentTab = "leave";
+      } else if (key === "5") {
         this.currentTab = "modifyInfo";
+      } else if (key === "3") {
+        this.currentTab = "clockInfo";
       }
     },
   },
-  components: { leave, myClock, staffNotice, modifyInfo }
+  components: { leave, myClock, staffNotice, modifyInfo, clockInfo }
 }
 </script>
 

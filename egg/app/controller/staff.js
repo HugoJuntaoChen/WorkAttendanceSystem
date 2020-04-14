@@ -52,6 +52,31 @@ class StaffController extends Controller {
         let result = await service.staff.getSomeStaffInfo(username);
         ctx.body = result;
     }
+
+    async addStaff() {
+        const {
+            ctx,
+            service
+        } = this;
+        let query = ctx.request.body;
+
+        let result = await service.staff.addStaff(query)
+        if (result.affectedRows === 1) {
+            ctx.body = result;
+        }
+    }
+    async deleteStaff() {
+        const {
+            ctx,
+            service
+        } = this;
+        let query = ctx.request.body;
+
+        let result = await service.staff.deleteStaff(query)
+        if (result.affectedRows === 1) {
+            ctx.body = result;
+        }
+    }
 }
 
 module.exports = StaffController
