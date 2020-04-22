@@ -61,7 +61,6 @@ export default {
   created () {
     this.$axios.get(`http://127.0.0.1:7001/admin/getleave`)
       .then(res => {
-        res.data.reverse();
         this.recordData = res.data;
 
       }).catch(err => {
