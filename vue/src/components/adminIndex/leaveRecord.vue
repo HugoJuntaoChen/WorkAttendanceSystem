@@ -42,15 +42,7 @@
           <span style="margin-left: 10px">{{ scope.row.info }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="处理状态">
-        <template slot-scope="scope">
-          <!-- <span style="margin-left: 10px">{{  }}</span> -->
-          <el-select v-model="scope.row.state" placeholder="请选择" @change="changeState(scope.row)">
-            <el-option v-for="item in options" :key="item.value" :label="item.value" :value="item.value">
-            </el-option>
-          </el-select>
-        </template>
-      </el-table-column>
+
     </el-table>
   </div>
 </template>
@@ -64,10 +56,6 @@ export default {
     return {
       recordData: mockData,
       search: "",
-      options: [
-        { value: '未处理' },
-        { value: '已处理' },
-      ]
     };
   },
   created () {
@@ -80,27 +68,7 @@ export default {
         console.log(err);
       })
   },
-  methods: {
-    changeState (rowData) {
-      let obj = {
-        row: {
-          state: rowData.state
-        },
-        options: {
-          username: rowData.username,
-          startDate: rowData.startDate,
-          endDate: rowData.endDate
-        }
-      }
-      this.$axios.post('http://127.0.0.1:7001/admin/changeleavestate', obj)
-        .then(res => {
-          messages(this, 'success', '修改状态成功')
-        }).catch(err => {
-          console.log(err);
-          messages(this, 'error', '服务器出现错误')
-        })
-    }
-  }
+
 };
 </script>
 

@@ -14,7 +14,6 @@ class testController extends Controller {
         let parts = ctx.multipart({
             autoFields: true
         });
-
         let stream;
         while ((stream = await parts()) != null) {
             if (!stream.filename) {
