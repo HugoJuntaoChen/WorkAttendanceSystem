@@ -21,6 +21,10 @@
         <i class="el-icon-setting"></i>
         <span slot="title">销假</span>
       </el-menu-item>
+      <el-menu-item index="6">
+        <i class="el-icon-setting"></i>
+        <span slot="title">部门管理</span>
+      </el-menu-item>
     </el-menu>
     <staffInfo :is="currentTab" keep-alive></staffInfo>
   </div>
@@ -31,7 +35,8 @@ import clockInRecord from "./adminIndex/clockInRecord";
 import notice from "./adminIndex/notice";
 import staffInfo from "./adminIndex/staffInfo";
 import leaveRecord from './adminIndex/leaveRecord';
-import terminate from './adminIndex/terminate'
+import terminate from './adminIndex/terminate';
+import partment from './adminIndex/partment'
 export default {
   name: "adminIndex",
   data () {
@@ -51,10 +56,12 @@ export default {
         this.currentTab = 'leaveRecord'
       } else if (key === '5') {
         this.currentTab = 'terminate'
+      } else if (key === '6') {
+        this.currentTab = 'partment'
       }
     }
   },
-  components: { clockInRecord, notice, staffInfo, leaveRecord, terminate }
+  components: { clockInRecord, notice, staffInfo, leaveRecord, terminate, partment }
 };
 </script>
 

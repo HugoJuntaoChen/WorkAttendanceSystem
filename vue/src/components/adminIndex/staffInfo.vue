@@ -54,6 +54,12 @@
         <el-form-item label="手机" label-width="80px" prop="phone">
           <el-input v-model="form.phone" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="岗位" label-width="80px" prop="phone">
+          <el-select v-model="form.state" placeholder="请选择岗位">
+            <el-option v-for="item in options" :key="item.value" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="邮箱" label-width="80px" prop="email">
           <el-input v-model="form.email" autocomplete="off"></el-input>
         </el-form-item>
@@ -96,6 +102,13 @@ export default {
       form: {},
       ifAdd: true,
       ifUploadPhoto: false,
+      options: [{
+        value: '前端'
+      }, {
+        value: '后端'
+      }, {
+        value: '测试'
+      }],
       rules: {
         phone: [
           { validator: validatePhone, trigger: 'blur' }
@@ -215,7 +228,8 @@ export default {
               row: {
                 email: this.form.email,
                 phone: this.form.phone,
-                photo: this.form.photo
+                photo: this.form.photo,
+                state: this.form.state
               },
               username: this.form.username
             }
