@@ -184,9 +184,15 @@ export default {
         obj.username = row.username;
         this.$axios.post('http://127.0.0.1:7001/staff/deletestaff', obj).then(res => {
           this.tableData.splice(index, 1);
+
         }).catch(err => {
           messages(this, 'error', '服务器出现错误')
         })
+        this.$axios.post('http://127.0.0.1:7001/deleteclock', obj).then(res => {
+          console.log(res);
+        }).catch(err => {
+          console.log(err);
+        });
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -210,6 +216,7 @@ export default {
             }
             this.$axios.post('http://127.0.0.1:7001/staff/addstaff', obj).then(res => {
               let path = obj.photo;
+              let days = 7;
               if (path) {
                 let arr = path.split('/');
                 arr.splice(0, 1);
@@ -219,21 +226,40 @@ export default {
               that.tableData.push(obj)
               this.dialogFormVisible = false;
               messages(this, 'success', '添加员工成功')
+              let username = obj.username;
+              for (let i = 1; i <= days; i++) {
+                this.$axios.post('http://127.0.0.1:7001/staff/addstaff/clock', {
+                  username: username,
+                  startTime: '',
+                  endTime: '',
+                  date: '2020-05-0' + i,
+                  state: '未入职'
+                }).then(res => {
+                  console.log(res);
+                }).catch(err => {
+                  console.log(err);
+                })
+              }
             }).catch(err => {
               console.log(err);
               messages(this, 'error', '服务器出现错误')
             })
           } else {
+            let photo = this.form.photo;
             obj = {
               row: {
                 email: this.form.email,
                 phone: this.form.phone,
-                photo: this.form.photo,
-                state: this.form.state
+                state: this.form.state,
+                photo: photo
               },
               username: this.form.username
             }
+            console.log(obj);
+
             let cloneObj = JSON.parse(JSON.stringify(obj));
+            console.log(cloneObj);
+
             if (!this.ifUploadPhoto) {
               cloneObj.row.photo = 'app' + cloneObj.row.photo.split('http://127.0.0.1:7001')[1];
             }
@@ -246,6 +272,7 @@ export default {
               messages(this, 'error', '服务器出现错误')
             })
           }
+          this.ifUploadPhoto = false;
         } else {
           messages(this, 'warning', '所填写的信息有误，请重新修改')
         }

@@ -65,6 +65,17 @@ class StaffController extends Controller {
             ctx.body = result;
         }
     }
+    async addStaffClock() {
+        const {
+            ctx,
+            service
+        } = this;
+        let query = ctx.request.body;
+        let result = await service.staff.addStaffClock(query)
+        if (result.affectedRows === 1) {
+            ctx.body = result;
+        }
+    }
     async deleteStaff() {
         const {
             ctx,
@@ -73,6 +84,17 @@ class StaffController extends Controller {
         let query = ctx.request.body;
 
         let result = await service.staff.deleteStaff(query)
+        if (result.affectedRows === 1) {
+            ctx.body = result;
+        }
+    }
+    async deleteStaffClock() {
+        const {
+            ctx,
+            service
+        } = this;
+        let query = ctx.request.body;
+        let result = await service.staff.deleteStaffClock(query)
         if (result.affectedRows === 1) {
             ctx.body = result;
         }

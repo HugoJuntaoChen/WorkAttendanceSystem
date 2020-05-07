@@ -51,13 +51,13 @@ export default {
     this.username = sessionStorage.getItem('username');
     this.$axios.get(`http://127.0.0.1:7001/staff/getsomeclock?username=${this.username}`)
       .then(res => {
-        res.data.forEach(item => {
-          if (!item.endTime) {
+
+        this.recordData = res.data;
+        this.recordData.forEach(item => {
+          if (!item.startTime && item.state !== '未入职') {
             item.state = '下班未签到'
           }
-        });
-        this.recordData = res.data;
-
+        })
       }).catch(err => {
         console.log(err);
       })

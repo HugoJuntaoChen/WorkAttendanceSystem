@@ -43,11 +43,27 @@ class StaffService extends Service {
         let result = await app.mysql.insert('staff', query)
         return result;
     }
+    async addStaffClock(query) {
+        const {
+            app
+        } = this;
+        const result = await app.mysql.insert('clockinfo',
+            query
+        );
+        return result;
+    }
     async deleteStaff(query) {
         const {
             app
         } = this;
         let result = await app.mysql.delete('staff', query)
+        return result;
+    }
+    async deleteStaffClock(query) {
+        const {
+            app
+        } = this;
+        let result = await app.mysql.delete('clockinfo', query)
         return result;
     }
     async check(staff) {

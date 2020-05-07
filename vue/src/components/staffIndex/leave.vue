@@ -69,16 +69,51 @@ export default {
         info: '',
         startDate: '',
         endDate: ''
-      }
+      },
+      days: 0,
+      month: 0,
+      createDate: ''
     };
+  },
+  created () {
+    this.$axios.get('http://127.0.0.1:7001/staff/getstaffinfo').then(res => {
+      res.data.forEach(item => {
+        if (item.username === sessionStorage.getItem('username')) {
+          this.createDate = item.createDate;
+        }
+      })
+    }).catch(err => {
+      console.log(err);
+    })
   },
   methods: {
     changeDate () {
       this.leaveData.startDate = this.dateArray[0];
       this.leaveData.endDate = this.dateArray[1];
+      this.days = this.leaveData.endDate.split('-')[2] - this.leaveData.startDate.split('-')[2];
+      this.month = this.leaveData.endDate.split('-')[1] - this.leaveData.startDate.split('-')[1];
     },
     checkPost () {
-      if (this.leaveData.type && this.leaveData.info && this.leaveData.startDate && this.leaveData.endDate) {
+      let month = this.createDate.split('-')[1];
+      let day = this.createDate.split('-')[2];
+      let startDateMonth = this.leaveData.startDate.split('-')[1];
+      let startDateDay = this.leaveData.startDate.split('-')[2];
+      if (month > startDateMonth) {
+        messages(this, 'warning', '您还未入职哦^-^')
+        return
+      }
+      if (month <= startDateMonth && day > startDateDay) {
+        messages(this, 'warning', '您还未入职哦^-^')
+        return
+      }
+      if (this.leaveData.type && this.leaveData.startDate && this.leaveData.endDate) {
+        if (!this.month && this.days > 7) {
+          messages(this, 'warning', '请假日期不能大于7天')
+          return;
+        } else if (this.month) {
+          messages(this, 'warning', '请假日期不能大于7天')
+          return;
+        }
         this.dialogVisible = true;
       } else {
         messages(this, 'warning', '请填写完整内容');

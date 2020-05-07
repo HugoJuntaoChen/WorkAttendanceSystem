@@ -55,5 +55,62 @@ class photoController extends Controller {
         const result = await service.photo.getPhoto(query);
         ctx.body = result;
     }
+    async recognition1() {
+        const {
+            ctx,
+            service
+        } = this;
+        ctx.body = 'hello';
+    }
+    async recognition() {
+        const {
+            ctx,
+            service
+        } = this;
+        let staff = ctx.request.body.username;
+        let photo = ctx.request.body.data;
+        //员工路径
+        const staffImg = await service.photo.getPhoto(staff);
+        //fr加载员工图片
+        const imageByStaff = fr.loadImage(staffImg);
+        const detector = fr.FaceDetector()
+        const targetSize = 150
+        const faceImages = detector.detectFaces(imageByStaff, targetSize)
+        faceImages.forEach((img, i) => fr.saveImage(img, ))
+        const recognizer = fr.FaceRecognizer()
+
+        trainDataByClass.forEach((faces, label) => {
+            const name = classNames[label]
+            recognizer.addFaces(faces, name)
+        })
+        const modelState = recognizer.serialize()
+        fs.writeFileSync('model.json', JSON.stringify(modelState))
+        const errors = classNames.map(_ => [])
+        testDataByClass.forEach((faces, label) => {
+            const name = classNames[label]
+            console.log()
+            console.log('testing %s', name)
+            faces.forEach((face, i) => {
+                const prediction = recognizer.predictBest(face)
+                console.log('%s (%s)', prediction.className, prediction.distance)
+
+                // count number of wrong classifications
+                if (prediction.className !== name) {
+                    errors[label] = errors[label] + 1
+                }
+            })
+        })
+
+        // print the result
+        result = classNames.map((className, label) => {
+            const numTestFaces = testDataByClass[label].length
+            const numCorrect = numTestFaces - errors[label].length
+            const accuracy = parseInt((numCorrect / numTestFaces) * 10000) / 100
+            return `${className} ( ${accuracy}% ) : ${numCorrect} of ${numTestFaces} faces have been recognized correctly`
+        })
+        console.log('result:')
+        console.log(result)
+        ctx.body = result;
+    }
 }
 module.exports = photoController;

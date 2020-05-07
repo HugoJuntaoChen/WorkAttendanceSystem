@@ -1,43 +1,24 @@
 module.exports = [{
-    username: 'cjt',
-    date: '2020-04-01',
-    startTime: '10:00',
-    endTime: '18:00',
-    state: '正常'
+    date: '2020-05-01',
+    state: '节假日'
   },
   {
-    username: 'wyf',
-    date: '2020-04-02',
-    startTime: '10:00',
-    endTime: '18:00',
-    state: '正常'
-  },
-  {
-    username: 'cxk',
-    date: '2020-04-03',
-    startTime: '10:00',
-    endTime: '18:00',
-    state: '正常'
-  },
-  {
-    username: 'lh',
-    date: '2020-04-04',
-    startTime: '10:00',
-    endTime: '18:00',
-    state: '正常'
-  },
-  {
-    username: 'cjt',
-    date: '2020-04-02',
-    startTime: '10:00',
-    endTime: '18:00',
-    state: '正常'
-  },
-  {
-    username: 'cjt',
-    date: '2020-04-02',
-    startTime: '10:00',
-    endTime: '18:00',
-    state: '正常'
-  },
+    date: '2020-05-02',
+    state: '节假日'
+  }, {
+    date: '2020-05-03',
+    state: '节假日'
+  }, {
+    date: '2020-05-04',
+    state: '节假日'
+  }, {
+    date: '2020-05-05',
+    state: '节假日'
+  }, {
+    date: '2020-05-06',
+    state: '未打卡'
+  }, {
+    date: '2020-05-07',
+    state: '未打卡'
+  }
 ]

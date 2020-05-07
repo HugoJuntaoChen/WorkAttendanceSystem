@@ -29,13 +29,16 @@ module.exports = app => {
     //请假
     router.post('/staff/addleaveissues', controller.leave.addLeave)
     router.get('/admin/getleave', controller.leave.getLeave)
+    //销假
     router.post('/admin/changeleavestate', controller.leave.changeLeaveState)
 
     //管理员-员工编辑页 
     router.get('/staff/getstaffinfo', controller.staff.getStaffInfo)
     //新增员工
     router.post('/staff/addstaff', controller.staff.addStaff)
+    router.post('/staff/addstaff/clock', controller.staff.addStaffClock)
     router.post('/staff/deletestaff', controller.staff.deleteStaff)
+    router.post('/deleteclock', controller.staff.deleteStaffClock)
 
 
     //员工-修改个人信息
@@ -49,6 +52,7 @@ module.exports = app => {
     router.post('/photo/save', controller.photo.save);
     //图片获取
     router.get('/photo/get', controller.photo.getPhoto);
+    router.post('/face', controller.photo.recognition1);
 
 
     //测试

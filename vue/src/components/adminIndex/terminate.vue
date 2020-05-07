@@ -7,15 +7,15 @@
       <h3 style="color:red;margin-left:50px">待处理</h3>
       <el-col :span="4" :offset="19">
         <span>搜索</span>
-        <el-input v-model="search" size="mini" placeholder="输入名字搜索" />
+        <el-input v-model="search1" size="mini" placeholder="输入名字搜索" />
       </el-col>
     </el-row>
 
     <el-table :data="
         recordData.filter(
           data =>
-            !search ||
-            data.username.toLowerCase().includes(search.toLowerCase())
+            !search1 ||
+            data.username.toLowerCase().includes(search1.toLowerCase())
         )
       " border style="width: 99%;margin-top:20px;margin-left:10px" :default-sort="{ prop: 'date', order: 'descending' }">
       <el-table-column label="用户名">
@@ -57,15 +57,15 @@
       <h3 style="color:green;margin-left:50px;margin-top:100px">已处理</h3>
       <el-col :span="4" :offset="19">
         <span>搜索</span>
-        <el-input v-model="search" size="mini" placeholder="输入名字搜索" />
+        <el-input v-model="search2" size="mini" placeholder="输入名字搜索" />
       </el-col>
     </el-row>
 
     <el-table :data="
         afterData.filter(
           data =>
-            !search ||
-            data.username.toLowerCase().includes(search.toLowerCase())
+            !search2 ||
+            data.username.toLowerCase().includes(search2.toLowerCase())
         )
       " border style="width: 99%;margin-top:20px;margin-left:10px" :default-sort="{ prop: 'date', order: 'descending' }">
       <el-table-column label="用户名">
@@ -105,7 +105,8 @@ export default {
   data () {
     return {
       recordData: [],
-      search: "",
+      search1: "",
+      search2: "",
       options: [
         { value: '未处理' },
         { value: '已处理' },

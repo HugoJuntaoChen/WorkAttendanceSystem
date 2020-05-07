@@ -14,15 +14,15 @@
         <span slot="title">打卡记录</span>
       </el-menu-item>
       <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">请假</span>
+        <i class="el-icon-document"></i>
+        <span slot="title">请假统计</span>
       </el-menu-item>
       <el-menu-item index="5">
         <i class="el-icon-setting"></i>
         <span slot="title">销假</span>
       </el-menu-item>
       <el-menu-item index="6">
-        <i class="el-icon-setting"></i>
+        <i class="el-icon-menu"></i>
         <span slot="title">部门管理</span>
       </el-menu-item>
     </el-menu>

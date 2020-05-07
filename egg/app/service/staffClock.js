@@ -23,13 +23,11 @@ class staffClockService extends Service {
         );
         return result;
     }
-    async getAll(info) {
+    async getAll(username) {
         const {
             app
         } = this;
-        const result = await app.mysql.select('clockinfo',
-            info
-        );
+        const result = await app.mysql.select('clockinfo');
         return result;
     }
     async getSome(info) {

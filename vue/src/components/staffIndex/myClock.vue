@@ -5,7 +5,9 @@
     </h1>
     <div style="width:100%;display:flex">
       <div style="height:50px;width:50%;flex:1">
-        <el-button @click="clockState('on')" style="margin-left:20px">上班打卡</el-button>：{{ startTime }}
+        <el-button @click="clockState('on')" style="margin-left:20px"
+          >上班打卡</el-button
+        >：{{ startTime }}
       </div>
       <div style="height:50px;width:50%;flex:1">
         <el-button @click="clockState('off')">下班打卡</el-button>：{{
@@ -13,9 +15,18 @@
         }}
       </div>
     </div>
-    <el-dialog title="人脸识别中" :visible.sync="dialogVisible" @close="closeDialog">
-      <video id="video" autoplay style="width:500px;height:500px;margin:0 auto"></video>
-      <span :style="{color:facingMessageColor}">{{ facingMessage }}</span>
+    <el-dialog
+      title="人脸识别中"
+      :visible.sync="dialogVisible"
+      @close="closeDialog"
+    >
+      <video
+        id="video"
+        autoplay
+        style="width:500px;height:500px;margin:0 auto"
+      ></video>
+      <canvas id="canvas1" style="height:120px" v-show="false"></canvas>
+      <span :style="{ color: facingMessageColor }">{{ facingMessage }}</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="clock">确 定</el-button>
@@ -27,13 +38,14 @@
 import dayjs from "dayjs";
 import { pre } from "@/assets/js/mock/noticeMock";
 import { messages } from "@/assets/js/util";
+import html2canvas from "html2canvas";
 // import tracking from "@/assets/js/tracking/tracking";
 // const tracking = require("@/assets/js/tracking/tracking");
 //获取视频流
 let mediaStreamTrack;
 export default {
   name: "notice",
-  data () {
+  data() {
     return {
       username: "",
       startTime: "",
@@ -43,11 +55,11 @@ export default {
       date: "",
       situation: "",
       facingMessage: "",
-      facingMessageColor: 'green',
+      facingMessageColor: "green",
       count: 1
     };
   },
-  created () {
+  created() {
     this.username = sessionStorage.getItem("username");
     this.date = dayjs().format("YYYY-MM-DD");
     this.$axios
@@ -64,7 +76,7 @@ export default {
       });
   },
   methods: {
-    clockState (state) {
+    clockState(state) {
       if (state === "on" && this.startTime) {
         messages(this, "warning", "你今天已打卡");
         return;
@@ -75,32 +87,32 @@ export default {
         messages(this, "warning", "请先上班打卡");
         return;
       }
-      if (state === 'off') {
-        this.count++
+      if (state === "off") {
+        this.count++;
       }
       this.dialogVisible = true;
       this.openVideo();
-      if (state === 'on') {
+      if (state === "on") {
         setTimeout(() => {
           this.facingMessage = "人脸识别成功";
-          this.facingMessageColor = 'green'
+          this.facingMessageColor = "green";
         }, 5000);
-      } else if (state === 'off' && this.count % 2 === 0) {
+      } else if (state === "off" && this.count % 2 === 0) {
         setTimeout(() => {
           this.facingMessage = "人脸识别失败";
-          this.facingMessageColor = 'red'
+          this.facingMessageColor = "red";
         }, 5000);
-      } else if (state === 'off' && this.count % 2 !== 0) {
+      } else if (state === "off" && this.count % 2 !== 0) {
         setTimeout(() => {
           this.facingMessage = "人脸识别成功";
-          this.facingMessageColor = 'green'
+          this.facingMessageColor = "green";
         }, 5000);
       }
 
       this.state = state;
     },
-    clock () {
-      if (this.facingMessage === '人脸识别成功') {
+    clock() {
+      if (this.facingMessage === "人脸识别成功") {
         if (this.state === "on") {
           this.clockIn();
         } else {
@@ -111,7 +123,7 @@ export default {
         messages(this, "warning", "请等待人脸识别成功");
       }
     },
-    clockIn () {
+    clockIn() {
       let startTime = dayjs().format("HH:mm");
       let situation = "";
       if (dayjs().hour() > 10) {
@@ -139,7 +151,7 @@ export default {
           messages(this, "error", "打卡失败！请联系管理员");
         });
     },
-    clockOff () {
+    clockOff() {
       let endTime = dayjs().format("HH:mm");
       if (dayjs().hour() < 19) {
         this.situation += "、早退";
@@ -168,7 +180,7 @@ export default {
           messages(this, "error", "打卡失败！请联系管理员");
         });
     },
-    openVideo () {
+    openVideo() {
       let vm = this;
       this.$nextTick(() => {
         let video = document.querySelector("#video");
@@ -182,53 +194,49 @@ export default {
             .getUserMedia({
               video: true
             })
-            .then(function (stream) {
+            .then(function(stream) {
               mediaStreamTrack =
                 typeof stream.stop === "function"
                   ? stream
                   : stream.getTracks()[0];
               video.srcObject = stream;
               video.play();
-              //   setTimeout(() => {
-              //     vm.facingMessage = "人脸识别成功";
-              //   }, 5000);
+              setTimeout(() => {}, 3000);
             })
-            .catch(function (err) {
+            .catch(function(err) {
               console.log(err);
             });
         }
       });
     },
-    closeDialog () {
+    closeDialog() {
       this.facingMessage = "";
       mediaStreamTrack && mediaStreamTrack.stop();
     },
-    submit () {
-      var img = document.getElementById('img');
+    getCompetence() {
+      let canvas1 = document.querySelector("#canvas1");
+      let context1 = canvas1.getContext("2d");
+      html2canvas(canvas1).then(canvas => {
+        let saveImage = canvas1.toDataURL("image/jpg");
+        console.log(saveImage);
 
-      var tracker = new tracking.ObjectTracker(['face', 'eye', 'mouth']);
-      tracker.setStepSize(1.7);
-
-      tracking.track('#img', tracker);
-
-      tracker.on('track', function (event) {
-        event.data.forEach(function (rect) {
-          window.plot(rect.x, rect.y, rect.width, rect.height);
-        });
+        let fd = new FormData();
+        fd.append("imgFile", saveImage);
       });
-
-      window.plot = function (x, y, w, h) {
-        var rect = document.createElement('div');
-        document.querySelector('.demo-container').appendChild(rect);
-        rect.classList.add('rect');
-        rect.style.width = w + 'px';
-        rect.style.height = h + 'px';
-        rect.style.left = (img.offsetLeft + x) + 'px';
-        rect.style.top = (img.offsetTop + y) + 'px';
-      };
+      this.$axios
+        .post("http://127.0.0.1:7001/face", {
+          username: sessionStorage.getItem("username"),
+          data: fd
+        })
+        .then(res => {
+          this.answer = res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     mediaStreamTrack && mediaStreamTrack.stop();
   }
 };
