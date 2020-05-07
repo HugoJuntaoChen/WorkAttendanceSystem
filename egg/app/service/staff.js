@@ -66,6 +66,13 @@ class StaffService extends Service {
         let result = await app.mysql.delete('clockinfo', query)
         return result;
     }
+    async deleteStaffLeave(query) {
+        const {
+            app
+        } = this;
+        let result = await app.mysql.delete('leaveIssues', query)
+        return result;
+    }
     async check(staff) {
         const {
             app

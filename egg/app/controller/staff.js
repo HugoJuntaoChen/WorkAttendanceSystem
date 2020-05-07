@@ -99,6 +99,17 @@ class StaffController extends Controller {
             ctx.body = result;
         }
     }
+    async deleteStaffLeave() {
+        const {
+            ctx,
+            service
+        } = this;
+        let query = ctx.request.body;
+        let result = await service.staff.deleteStaffLeave(query)
+        if (result.affectedRows === 1) {
+            ctx.body = result;
+        }
+    }
 }
 
 module.exports = StaffController

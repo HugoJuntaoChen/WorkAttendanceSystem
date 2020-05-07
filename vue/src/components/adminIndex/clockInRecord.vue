@@ -5,24 +5,24 @@
     </h1>
     <el-row>
       <el-col :span="4" :offset="1" style="margin-top:3px">
-        <el-select v-model="value" placeholder="请选择月份" @change='changeMonth'>
+        <el-select v-model="value" placeholder="请选择月份">
           <el-option v-for="item in options" :key="item.value" :label="item.value" :value="item.value">
           </el-option>
         </el-select>
       </el-col>
-      <el-col :span="4" :offset="14">
+      <el-col :span="6" :offset="12">
         <span>搜索</span>
-        <el-input v-model="search" size="mini" placeholder="输入名字搜索" @input="select" />
+        <el-input v-model="search" size="medium" placeholder="输入名字搜索" @input="select">
+          <el-select v-model="selectType" slot="prepend" style='width:100px'>
+            <el-option label="用户名" value="username"></el-option>
+            <el-option label="日期" value="date"></el-option>
+          </el-select>
+        </el-input>
+
       </el-col>
     </el-row>
 
-    <el-table :data="
-        recordData.filter(
-          data =>
-            !search ||
-            data.username.toLowerCase().includes(search.toLowerCase())
-        )
-      " border style="width: 99%;margin-top:20px;margin-left:10px" :default-sort="{prop: 'date', order: 'descending'}">
+    <el-table :data="recordData" border style="width: 99%;margin-top:20px;margin-left:10px" :default-sort="{prop: 'date', order: 'descending'}">
       <el-table-column label="用户名" sortable>
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.username }}</span>
@@ -78,6 +78,7 @@ export default {
   data () {
     return {
       recordData: [],
+      leaveData: [],
       fiveData: [],
       copyData: [
         {
@@ -92,11 +93,10 @@ export default {
       showDetail: false,
       color: '#606266',
       options: [{
-        value: '4月',
-      }, {
         value: '5月',
       }],
-      value: '5月'
+      value: '5月',
+      selectType: 'username'
     };
   },
   created () {
@@ -107,11 +107,17 @@ export default {
     }).catch(err => {
       console.log(err);
     })
+    this.$axios.get(`http://127.0.0.1:7001/admin/getleave`)
+      .then(res => {
+        this.leaveData = res.data;
+      }).catch(err => {
+        console.log(err);
+      })
     this.$axios.get(`http://127.0.0.1:7001/staff/getallclock`)
       .then(res => {
         this.recordData = res.data;
         this.recordData.forEach(item => {
-          if (item.state === '正常' || item.state === '节假日' || item.state === '未入职') {
+          if (item.state === '正常' || item.state === '节假日' || item.state === '未入职' || item.state === '请假') {
             item.color = '#606266';
           } else {
             item.color = 'red'
@@ -123,19 +129,30 @@ export default {
       })
   },
   methods: {
-    changeMonth () {
-      if (this.value === '4月') {
-        this.recordData = []
-      } else if (this.value === "5月") {
-        this.recordData = this.fiveData
+    left () {
+      if (this.selectType === 'username') {
+        this.recordData = this.recordData.filter(
+          data =>
+            !this.search ||
+            data.username.toLowerCase().includes(this.search.toLowerCase())
+        )
+      } else if (this.selectType === 'date') {
+        this.recordData = this.recordData.filter(
+          data =>
+            !this.search ||
+            data.date.toLowerCase().includes(this.search.toLowerCase())
+        )
+
       }
+
     },
     select () {
+      this.recordData = this.fiveData
+      this.left()
       if (this.user.includes(this.search)) {
         this.copyData[0].username = this.search;
         let data = JSON.parse(JSON.stringify(this.recordData));
         data.forEach(item => {
-          console.log(item);
           if (item.username === this.search) {
             this.copyData[0].days++;
             if (item.state === '正常' || item.state === '节假日' || item.state === '未入职') {

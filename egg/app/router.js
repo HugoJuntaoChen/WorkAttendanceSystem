@@ -37,8 +37,10 @@ module.exports = app => {
     //新增员工
     router.post('/staff/addstaff', controller.staff.addStaff)
     router.post('/staff/addstaff/clock', controller.staff.addStaffClock)
+
     router.post('/staff/deletestaff', controller.staff.deleteStaff)
-    router.post('/deleteclock', controller.staff.deleteStaffClock)
+    router.post('/deleteClock', controller.staff.deleteStaffClock)
+    router.post('/deleteleave', controller.staff.deleteStaffLeave)
 
 
     //员工-修改个人信息

@@ -28,7 +28,7 @@
           <span style="margin-left: 10px">{{ scope.row.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="130">
+      <el-table-column label="部门" width="130">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.state }}</span>
         </template>
@@ -184,15 +184,20 @@ export default {
         obj.username = row.username;
         this.$axios.post('http://127.0.0.1:7001/staff/deletestaff', obj).then(res => {
           this.tableData.splice(index, 1);
-
+          this.$axios.post('http://127.0.0.1:7001/deleteClock', obj).then(res => {
+            console.log(res);
+          }).catch(err => {
+            console.log(err);
+          });
+          this.$axios.post('http://127.0.0.1:7001/deleteleave', obj).then(res => {
+            console.log(res);
+          }).catch(err => {
+            console.log(err);
+          });
         }).catch(err => {
           messages(this, 'error', '服务器出现错误')
         })
-        this.$axios.post('http://127.0.0.1:7001/deleteclock', obj).then(res => {
-          console.log(res);
-        }).catch(err => {
-          console.log(err);
-        });
+
         this.$message({
           type: 'success',
           message: '删除成功!'

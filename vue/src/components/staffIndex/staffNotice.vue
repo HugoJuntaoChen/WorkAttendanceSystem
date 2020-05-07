@@ -3,7 +3,17 @@
     <h1 style="padding-left:40px">
       通告
     </h1>
-    <el-table :data="preNoticeData" border style="width: 99%;margin-top:20px;margin-left:10px">
+    <el-row>
+      <el-col :span="4" :offset="19">
+        <span>搜索</span>
+        <el-input v-model="search" size="mini" placeholder="输入内容搜索" />
+      </el-col>
+    </el-row>
+    <el-table :data="preNoticeData.filter(
+          data =>
+            !search ||
+            data.content.toLowerCase().includes(search.toLowerCase())
+        )" border style="width: 99%;margin-top:20px;margin-left:10px">
       <el-table-column label="title" width="100px">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.title }}</span>
@@ -32,6 +42,7 @@ export default {
   data () {
     return {
       preNoticeData: [],
+      search: ''
     };
   },
   created () {

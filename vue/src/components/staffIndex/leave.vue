@@ -94,17 +94,10 @@ export default {
       this.month = this.leaveData.endDate.split('-')[1] - this.leaveData.startDate.split('-')[1];
     },
     checkPost () {
-      let month = this.createDate.split('-')[1];
-      let day = this.createDate.split('-')[2];
-      let startDateMonth = this.leaveData.startDate.split('-')[1];
-      let startDateDay = this.leaveData.startDate.split('-')[2];
-      if (month > startDateMonth) {
-        messages(this, 'warning', '您还未入职哦^-^')
-        return
-      }
-      if (month <= startDateMonth && day > startDateDay) {
-        messages(this, 'warning', '您还未入职哦^-^')
-        return
+      const today = dayjs().format('YYYY-MM-DD');
+      if (!dayjs(this.leaveData.startDate).isAfter(dayjs(today))) {
+        messages(this, 'warning', '请提前请假^-^')
+        return;
       }
       if (this.leaveData.type && this.leaveData.startDate && this.leaveData.endDate) {
         if (!this.month && this.days > 7) {
